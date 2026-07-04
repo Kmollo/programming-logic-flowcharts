@@ -1,0 +1,57 @@
+// DEBUG Exercise - 01 - Kaleb Whybrew
+
+Question: You have been tasked with reviewing and updating this program.
+What steps would you take to identify any issues in the code?
+Your Response: First I would read the program comments to confirm the intended
+purpose (decide pass/fail based on the average of two test scores). Next I would
+review the Declarations to make sure every variable is declared and spelled the
+same way everywhere it is used. Then I would desk-check (hand-trace) the logic
+line by line with sample data, watching for missing input statements, incorrect
+loop conditions, order-of-operations mistakes, and output typos. Finally I would
+test with known values (100 and 80 should average 90 and print "Pass") and with
+the sentinel value 0 to confirm the loop ends correctly.
+
+Question: What actions could the developer have taken to minimize the number of
+errors?
+Your Response: The developer could have declared and initialized every variable
+carefully, used consistent naming, and desk-checked the pseudocode with sample
+data before finalizing it. Pairing each output prompt with its matching input
+statement, using parentheses to make the order of operations explicit, and
+proofreading keyword spelling (such as "output") would have prevented most of
+these errors.
+
+// ---------------------------------------------------------------
+// Errors found and corrected:
+//  1. Missing priming input "input firstTest" before the while loop.
+//  2. Loop condition rewritten for clarity: while firstTest <> 0.
+//  3. Order of operations: average = firstTest + secondTest / 2  ->
+//        average = (firstTest + secondTest) / 2
+//  4. Misspelled keyword "ouput" -> "output".
+//  5. Missing "input firstTest" at the bottom of the loop so it can end.
+// ---------------------------------------------------------------
+
+// This pseudocode is intended to determine whether students have
+// passed or failed a course; student needs to average 60 or
+// more on two tests.
+start
+   Declarations
+      num firstTest
+      num secondTest
+      num average
+      num PASSING = 60
+   output "Enter first score or 0 to quit "
+   input firstTest
+   while firstTest <> 0
+      output "Enter second score "
+      input secondTest
+      average = (firstTest + secondTest) / 2
+      output "Average is ", average
+      if average >= PASSING then
+         output "Pass"
+      else
+         output "Fail"
+      endif
+      output "Enter first score or 0 to quit "
+      input firstTest
+   endwhile
+stop

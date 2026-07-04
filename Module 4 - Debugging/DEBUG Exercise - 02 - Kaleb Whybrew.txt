@@ -1,0 +1,46 @@
+// DEBUG Exercise - 02 - Kaleb Whybrew
+//
+// Errors found and corrected:
+//  1. DEDUCTION is used in arithmetic, so it must be numeric:
+//        string DEDUCTION = 45  ->  num DEDUCTION = 45
+//  2. The program is meant to process many employees (it re-prompts for the
+//     next name), so the outer "if ... endif" must be a sentinel-controlled
+//     loop: "while name not equal to EOFNAME ... endwhile".
+//  3. The pay decision was written as a loop with the wrong keywords
+//        (while net > 0 then ... else ... endwhile).
+//     It is a single decision and must be an IF:
+//        if net > 0 then ... else ... endif
+// ---------------------------------------------------------------
+
+// This pseudocode is intended to display employee net pay values.
+// All employees have a standard $45 deduction from their checks.
+// If an employee does not earn enough to cover the deduction
+// an error message is displayed.
+start
+   Declarations
+      string name
+      num hours
+      num rate
+      num DEDUCTION = 45
+      string EOFNAME = "ZZZ"
+      num gross
+      num net
+   output "Enter first name or ", EOFNAME, " to quit"
+   input name
+   while name not equal to EOFNAME
+      output "Enter hours worked for ", name
+      input hours
+      output "Enter hourly rate for ", name
+      input rate
+      gross = hours * rate
+      net = gross - DEDUCTION
+      if net > 0 then
+         output "Net pay for ", name, " is ", net
+      else
+         output "Deductions not covered. Net is 0."
+      endif
+      output "Enter next name or ", EOFNAME, " to quit"
+      input name
+   endwhile
+   output "End of job"
+stop
