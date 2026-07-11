@@ -1,0 +1,85 @@
+Module 5 - Exercise 1 Plan - Kaleb Whybrew
+Planning a Structured Jeopardy Game Program
+
+1. Game Scenario and My Role
+   I am designing the program as the moderator (host). The computer presents the
+   game board, reads each clue, checks the contestant's response, and keeps score.
+   A single contestant plays against the board. Planning the structure before
+   coding lets me identify repeated steps and turn them into modules so the same
+   lines of code are not written over and over.
+
+2. Game Components
+   - Categories: 5 categories (for example: History, Science, Sports, Movies, Music).
+   - Clues: each category has 5 clues worth 100, 200, 300, 400, and 500 points,
+     for a total of 25 clues.
+   - Question format: each clue is stored with its correct answer so the program
+     can compare the contestant's response to the expected answer.
+   - Scoring: a correct response adds the clue's point value to the score; an
+     incorrect response subtracts the point value (standard Jeopardy scoring).
+   - Timing constraint: the contestant is given one attempt per clue, and the
+     game ends after all 25 clues have been answered.
+
+3. Constants and Variables
+   Constants:
+      TOTAL_CLUES = 25          // number of clues on the board
+   Variables:
+      string playerName         // contestant's name
+      string category           // category the contestant selects
+      num pointValue            // value of the selected clue
+      string answer             // contestant's response
+      string correctAnswer      // expected answer for the selected clue
+      num score                 // running total, starts at 0
+      num cluesAnswered         // counter, starts at 0; loop ends at TOTAL_CLUES
+
+4. Program Structure (three fundamental structures + modularization)
+   Mainline logic (sequence + loop):
+      - Perform one-time setup (housekeeping).
+      - Repeat the clue process in a loop until every clue is answered.
+      - Perform one-time wrap-up (end of job).
+   The repeated "select a clue, ask it, score it" steps are placed in a single
+   detailLoop() module. This removes redundancy: instead of writing the same
+   ask-and-score steps 25 times, the loop calls one module repeatedly.
+
+   Modules:
+   a) housekeeping()  - runs once at the start
+        - Display a welcome message and the rules.
+        - Input the contestant's playerName.
+        - Set score = 0 and cluesAnswered = 0 (initialization).
+        - Display the game board (categories and point values).
+
+   b) detailLoop()    - runs once per clue (called by the loop)
+        - Display "Select a category and point value."
+        - Input category and pointValue.
+        - Look up and display the clue for that selection.
+        - Input the contestant's answer.
+        - Selection structure:
+             if answer = correctAnswer then
+                score = score + pointValue   and display "Correct!"
+             else
+                score = score - pointValue   and display "Incorrect."
+        - Add 1 to cluesAnswered.
+        - Display the current score.
+
+   c) endOfJob()      - runs once at the end
+        - Display "Game over."
+        - Display the contestant's final score.
+
+5. Logic Flow (how the loop is controlled)
+      start
+         Declarations
+         housekeeping()
+         while cluesAnswered < TOTAL_CLUES
+            detailLoop()
+         endwhile
+         endOfJob()
+      stop
+
+6. Avoiding Redundancy
+   - All repeated clue handling lives in detailLoop(), so the code is written once.
+   - Setup and shutdown are isolated in housekeeping() and endOfJob().
+   - cluesAnswered acts as the loop control so the game always ends cleanly after
+     the last clue, keeping the structure a single-entry, single-exit loop.
+
+   This plan keeps the program structured (only sequence, selection, and loop),
+   readable, and easy to modify - for example, changing TOTAL_CLUES or adding a
+   category requires editing only one place.
