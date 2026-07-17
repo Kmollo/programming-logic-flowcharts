@@ -1,0 +1,156 @@
+Module 6 - Exercise 1 - Dash Cell Phone Company - Kaleb Whybrew
+Chapter 4, Programming Exercise #6 (parts a - e)
+
+// ===== Shared constants used by every part =====
+//   BASE        = 5.00     basic monthly rate
+//   FIRST       = 100      messages included in the base rate
+//   SECOND      = 300      end of the 3-cent tier
+//   RATE1       = 0.03     charge per message for messages 101 - 300
+//   RATE2       = 0.02     charge per message for messages 301 and up
+//   MID_CHARGE  = 6.00     full 101-300 tier = 200 messages * 0.03
+//   TAX         = 0.14     federal/state/local taxes
+//   QUIT        = 999      sentinel area code that ends input (parts b - e)
+
+// ===== Shared billing logic (used in all five parts) =====
+// Given messages, produces bill (before tax) and billWithTax.
+calcBill()
+   bill = BASE
+   if messages > FIRST then
+      if messages > SECOND then
+         bill = bill + MID_CHARGE + (messages - SECOND) * RATE2
+      else
+         bill = bill + (messages - FIRST) * RATE1
+      endif
+   endif
+   tax = bill * TAX
+   billWithTax = bill + tax
+return
+
+
+// =====================================================================
+// PART A - one customer; display data with bill before and after taxes
+// =====================================================================
+start
+   Declarations
+      num areaCode
+      num phoneNumber
+      num messages
+      num bill
+      num tax
+      num billWithTax
+   output "Enter area code, phone number, and number of messages"
+   input areaCode, phoneNumber, messages
+   calcBill()
+   output "Area code: ", areaCode
+   output "Phone number: ", phoneNumber
+   output "Messages sent: ", messages
+   output "Bill before taxes: $", bill
+   output "Bill after taxes:  $", billWithTax
+stop
+
+
+// =====================================================================
+// PART B - loop until sentinel; display ALL customers
+// =====================================================================
+start
+   Declarations
+      num areaCode
+      num phoneNumber
+      num messages
+      num bill
+      num tax
+      num billWithTax
+   output "Enter area code (999 to quit)"
+   input areaCode
+   while areaCode <> QUIT
+      output "Enter phone number and number of messages"
+      input phoneNumber, messages
+      calcBill()
+      output areaCode, phoneNumber, messages, bill, billWithTax
+      output "Enter area code (999 to quit)"
+      input areaCode
+   endwhile
+stop
+
+
+// =====================================================================
+// PART C - loop until sentinel; display only customers with > 100 messages
+// =====================================================================
+start
+   Declarations
+      num areaCode
+      num phoneNumber
+      num messages
+      num bill
+      num tax
+      num billWithTax
+   output "Enter area code (999 to quit)"
+   input areaCode
+   while areaCode <> QUIT
+      output "Enter phone number and number of messages"
+      input phoneNumber, messages
+      calcBill()
+      if messages > FIRST then
+         output areaCode, phoneNumber, messages, bill, billWithTax
+      endif
+      output "Enter area code (999 to quit)"
+      input areaCode
+   endwhile
+stop
+
+
+// =====================================================================
+// PART D - loop until sentinel; display only customers whose
+//          bill with taxes is over $10.00
+// =====================================================================
+start
+   Declarations
+      num areaCode
+      num phoneNumber
+      num messages
+      num bill
+      num tax
+      num billWithTax
+   output "Enter area code (999 to quit)"
+   input areaCode
+   while areaCode <> QUIT
+      output "Enter phone number and number of messages"
+      input phoneNumber, messages
+      calcBill()
+      if billWithTax > 10.00 then
+         output areaCode, phoneNumber, messages, bill, billWithTax
+      endif
+      output "Enter area code (999 to quit)"
+      input areaCode
+   endwhile
+stop
+
+
+// =====================================================================
+// PART E - prompt for one area code; loop until sentinel; display only
+//          customers who have that selected area code
+// =====================================================================
+start
+   Declarations
+      num selectedAreaCode
+      num areaCode
+      num phoneNumber
+      num messages
+      num bill
+      num tax
+      num billWithTax
+   output "Enter the three-digit area code to select"
+   input selectedAreaCode
+   output "Enter area code (999 to quit)"
+   input areaCode
+   while areaCode <> QUIT
+      output "Enter phone number and number of messages"
+      input phoneNumber, messages
+      calcBill()
+      if areaCode = selectedAreaCode then
+         output areaCode, phoneNumber, messages, bill, billWithTax
+      endif
+      output "Enter area code (999 to quit)"
+      input areaCode
+   endwhile
+stop
