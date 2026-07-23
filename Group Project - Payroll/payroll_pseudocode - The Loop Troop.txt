@@ -1,0 +1,136 @@
+Payroll Program Pseudocode  -  Group: The Loop Troop
+Members: Kaleb Whybrew, [Teammate 2], [Teammate 3], [Teammate 4]
+Tool chosen by the team: PSEUDOCODE (per Section 1, one tool only)
+
+// Constants
+//   STATE_TAX_RATE = 0.056      state tax 5.6%
+//   FED_TAX_RATE   = 0.079      federal tax 7.9%
+//   OVERTIME_RATE  = 1.5        time and a half
+//   REGULAR_HOURS  = 40
+//   MAX_HOURS      = 80         security limit
+//   WARNING_HOURS  = 60         unusual, must be confirmed
+//   MAX_DEPENDENTS = 10
+// Database
+//   payRateDB - employee ID is the primary key, hourly rate is the value
+
+start
+   Declarations
+      num empID, dependents
+      num hours, rate, grossPay, preTax, stateTax, fedTax, postTax
+      string firstName, lastName
+      allRows = empty list
+      num employeeCount = 0
+   output "The Loop Troop Payroll Program"
+   empID = getEmployeeID()                       // 0 means quit
+   while empID <> 0
+      firstName = getName("Enter first name")
+      lastName  = getName("Enter last name")
+      dependents = getDependents()
+      hours = getHours()
+      rate = look up empID in payRateDB          // database look-up by primary key
+      grossPay = calcGrossPay(rate, hours)
+      preTax = grossPay                          // taxes come out of the pre-tax amount
+      stateTax = calcStateTax(preTax)
+      fedTax = calcFedTax(preTax)
+      postTax = preTax - stateTax - fedTax
+      printPaycheck(all values)
+      add row to allRows
+      employeeCount = employeeCount + 1
+      empID = getEmployeeID()
+   endwhile
+   output "Payroll finished for ", employeeCount, " employees"
+   saveToSpreadsheet(allRows)
+stop
+
+// ============ MODULE 1 - INPUT AND SECURITY CHECKS (Kaleb) ============
+
+getEmployeeID()
+   while true
+      input answer "Enter employee ID (0 to quit)"
+      if answer is not a whole number then
+         output "SECURITY CHECK: the ID must be a number"
+      else if answer = 0 then
+         return 0
+      else if answer is in payRateDB then
+         return answer
+      else
+         output "SECURITY CHECK: ID is not in the database"
+      endif
+   endwhile
+return
+
+getName(prompt)
+   while true
+      input name prompt
+      if name is letters only and not blank then
+         return name
+      else
+         output "SECURITY CHECK: name must be letters and not blank"
+      endif
+   endwhile
+return
+
+getDependents()
+   while true
+      input answer "Enter number of dependents (0-10)"
+      if answer is a whole number from 0 to MAX_DEPENDENTS then
+         return answer
+      else
+         output "SECURITY CHECK: dependents must be 0 to 10"
+      endif
+   endwhile
+return
+
+getHours()
+   while true
+      input answer "Enter hours worked"
+      if answer is not a number then
+         output "SECURITY CHECK: hours must be a number"
+      else if answer <= 0 then
+         output "SECURITY CHECK: hours must be more than 0"
+      else if answer > MAX_HOURS then
+         output "SECURITY CHECK: hours can not be more than 80"
+      else if answer > WARNING_HOURS then
+         input check "WARNING: that many hours is unusual. Correct? (y/n)"
+         if check = "y" then
+            return answer
+         endif
+      else
+         return answer
+      endif
+   endwhile
+return
+
+// ============ MODULE 2 - CALCULATIONS ([Teammate 2]) ============
+
+calcGrossPay(rate, hours)
+   if hours <= REGULAR_HOURS then
+      gross = rate * hours
+   else
+      overtimeHours = hours - REGULAR_HOURS
+      gross = (rate * REGULAR_HOURS) + (rate * OVERTIME_RATE * overtimeHours)
+   endif
+return gross
+
+calcStateTax(preTax)
+return preTax * STATE_TAX_RATE
+
+calcFedTax(preTax)
+return preTax * FED_TAX_RATE
+
+// ============ MODULE 3 - OUTPUT AND SPREADSHEET ([Teammate 3]) ============
+
+printPaycheck(values)
+   output employee name, ID, dependents, hours, rate
+   output gross pay (pre-tax), state tax, federal tax, net pay (post-tax)
+return
+
+saveToSpreadsheet(allRows)
+   open payroll_results.csv for writing
+   write the header row
+   for each row in allRows
+      write the row
+   endfor
+   close the file
+   output "Results were saved to payroll_results.csv"
+return

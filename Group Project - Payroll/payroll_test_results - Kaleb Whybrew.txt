@@ -1,0 +1,112 @@
+========================================
+   The Loop Troop Payroll Program
+========================================
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  John Smith  (ID 101)
+  Dependents: 2
+  Hours worked: 40.0  Rate: $15.00
+  Gross pay (pre-tax):  $600.00
+  State tax (5.6%):     $33.60
+  Federal tax (7.9%):   $47.40
+  Net pay (post-tax):   $519.00
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Jane Doe  (ID 102)
+  Dependents: 1
+  Hours worked: 30.0  Rate: $18.50
+  Gross pay (pre-tax):  $555.00
+  State tax (5.6%):     $31.08
+  Federal tax (7.9%):   $43.84
+  Net pay (post-tax):   $480.08
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Bob Brown  (ID 103)
+  Dependents: 0
+  Hours worked: 45.0  Rate: $22.00
+  Gross pay (pre-tax):  $1045.00
+  State tax (5.6%):     $58.52
+  Federal tax (7.9%):   $82.56
+  Net pay (post-tax):   $903.92
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Sue Green  (ID 104)
+  Dependents: 3
+  Hours worked: 41.0  Rate: $12.75
+  Gross pay (pre-tax):  $529.12
+  State tax (5.6%):     $29.63
+  Federal tax (7.9%):   $41.80
+  Net pay (post-tax):   $457.69
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   WARNING: 80 hours is unusual. Is that correct? (y/n):   --------- PAYCHECK ---------
+  Employee:  Tim White  (ID 105)
+  Dependents: 2
+  Hours worked: 80.0  Rate: $19.25
+  Gross pay (pre-tax):  $1925.00
+  State tax (5.6%):     $107.80
+  Federal tax (7.9%):   $152.07
+  Net pay (post-tax):   $1665.13
+  ----------------------------
+
+Enter employee ID (0 to quit):   SECURITY CHECK: ID 999 is not in the database. Try again.
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Ann Black  (ID 106)
+  Dependents: 4
+  Hours worked: 38.0  Rate: $16.50
+  Gross pay (pre-tax):  $627.00
+  State tax (5.6%):     $35.11
+  Federal tax (7.9%):   $49.53
+  Net pay (post-tax):   $542.36
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10):   SECURITY CHECK: dependents must be 0 to 10. Try again.
+Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Joe Gray  (ID 107)
+  Dependents: 5
+  Hours worked: 50.0  Rate: $25.00
+  Gross pay (pre-tax):  $1375.00
+  State tax (5.6%):     $77.00
+  Federal tax (7.9%):   $108.62
+  Net pay (post-tax):   $1189.38
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   SECURITY CHECK: hours must be more than 0. Try again.
+Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Amy Stone  (ID 108)
+  Dependents: 1
+  Hours worked: 20.0  Rate: $14.00
+  Gross pay (pre-tax):  $280.00
+  State tax (5.6%):     $15.68
+  Federal tax (7.9%):   $22.12
+  Net pay (post-tax):   $242.20
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   SECURITY CHECK: hours must be a number. Try again.
+Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Sam Reed  (ID 109)
+  Dependents: 0
+  Hours worked: 44.0  Rate: $20.50
+  Gross pay (pre-tax):  $943.00
+  State tax (5.6%):     $52.81
+  Federal tax (7.9%):   $74.50
+  Net pay (post-tax):   $815.69
+  ----------------------------
+
+Enter employee ID (0 to quit): Enter first name:   SECURITY CHECK: a name can not be blank and must be letters only. Try again.
+Enter first name: Enter last name: Enter number of dependents (0-10): Enter hours worked:   --------- PAYCHECK ---------
+  Employee:  Kim Lake  (ID 110)
+  Dependents: 2
+  Hours worked: 40.0  Rate: $17.75
+  Gross pay (pre-tax):  $710.00
+  State tax (5.6%):     $39.76
+  Federal tax (7.9%):   $56.09
+  Net pay (post-tax):   $614.15
+  ----------------------------
+
+Enter employee ID (0 to quit): 
+Payroll finished for 10 employees.
+Results were saved to payroll_results.csv
