@@ -1,0 +1,90 @@
+// DEBUG07-01  -  Corrected by Kaleb Whybrew
+//
+// Errors found and corrected:
+//  1. OutputFile "allsales" was declared with the wrong case; every other
+//     line uses "allSales".  Changed the declaration to allSales.
+//  2. Mainline loop condition "while bothAtEof = "Y"" was backwards. The
+//     loop should run WHILE the files are NOT both done: while bothAtEof = "N".
+//  3. getReady(): after reading newSales, an eof set usedSalesperson to
+//     HIGH_NAME. It should set newSalesperson (that is the file we just read).
+//  4. getReady(): "usedsalesPerson" was misspelled/mis-cased; it should be
+//     "usedSalesperson".
+//  5. detailLoop() first branch: after outputting the used record it read the
+//     NEW file. It must read the SAME file it just output (usedSales), and set
+//     usedSalesperson to HIGH_NAME at eof.
+//  6. detailLoop() else branch: after outputting the new record it read the
+//     USED file. It must read the NEW file (newSales) instead.
+// -----------------------------------------------------------------------
+
+// Each time a salesperson sells a car at the
+// Pardeeville New and Used Auto Dealership,
+// a record is created containing the salesperson's
+// name and the amount of the sale.
+// Sales of new and used cars are kept in separate files,
+// sorted by salesperson ID number.
+// Management has requested a merged file so that
+// all of a salesperson's sales (both new and used cars)
+// are displayed together. The following code is intended
+// to merge the files.
+start
+   Declarations
+      string newSalesperson
+      num newAmount
+      string usedSalesperson
+      num usedAmount
+      string bothAtEof = "N"
+      string HIGH_NAME = "ZZZZZ"
+      InputFile newSales
+      InputFile usedSales
+      OutputFile allSales
+   getReady()
+   while bothAtEof = "N"
+      detailLoop()
+   endwhile
+   finish()
+stop
+
+getReady()
+   open newSales "NewSales.dat"
+   open usedSales "UsedSales.dat"
+   open allSales "AllSales.dat"
+
+   input newSalesperson, newAmount from newSales
+   if eof then
+      newSalesperson = HIGH_NAME
+   endif
+
+   input usedSalesperson, usedAmount from usedSales
+   if eof then
+      usedSalesperson = HIGH_NAME
+   endif
+
+   if newSalesperson = HIGH_NAME AND usedSalesperson = HIGH_NAME then
+      bothAtEof = "Y"
+   endif
+return
+
+detailLoop()
+   if newSalesperson > usedSalesperson then
+      output usedSalesperson, usedAmount to allSales
+      input usedSalesperson, usedAmount from usedSales
+      if eof then
+         usedSalesperson = HIGH_NAME
+      endif
+   else
+      output newSalesperson, newAmount to allSales
+      input newSalesperson, newAmount from newSales
+      if eof then
+         newSalesperson = HIGH_NAME
+      endif
+   endif
+   if newSalesperson = HIGH_NAME AND usedSalesperson = HIGH_NAME then
+      bothAtEof = "Y"
+   endif
+return
+
+finish()
+   close newSales
+   close usedSales
+   close allSales
+return

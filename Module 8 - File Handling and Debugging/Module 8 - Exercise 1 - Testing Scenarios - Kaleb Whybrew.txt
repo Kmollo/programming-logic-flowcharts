@@ -1,0 +1,66 @@
+Module 8 - Exercise 1 - Testing Scenarios and Proof of Testing - Kaleb Whybrew
+Program tested: "Module 8 - Exercise 1 - Solution file - Kaleb Whybrew.py"
+
+INPUT FILE 1 - Geraldines Businesses.csv (sorted by customer number)
+   1598, Jones,     Jeffersonville, 1500
+   2578, Smith,     Evansville,     2500
+   6548, Robertson, Indianapolis,   1000
+   9853, Erickson,  Clarksville,    1750
+   9856, Jacobs,    Columbus,       1900
+
+INPUT FILE 2 - Geralds Businesses.csv (sorted by customer number)
+   4891, Smith,   South Bend,   1500
+   4978, Miller,  Bloomington,  9800
+   5144, Johnson, Terre Haute,  3500
+   8949, Garcia,  Fort Wayne,   2500
+   9841, Brown,   Gary,         3000
+
+--------------------------------------------------------------------
+TEST SCENARIO 1 - Full merge keeps customer-number order
+   Expected: one file with all 10 records in ascending customer number
+             order (1598, 2578, 4891, 4978, 5144, 6548, 8949, 9841,
+             9853, 9856).
+   Actual output (from the program run):
+      1598  Jones      Jeffersonville   1500  (Geraldine)
+      2578  Smith      Evansville       2500  (Geraldine)
+      4891  Smith      South Bend       1500  (Gerard)
+      4978  Miller     Bloomington      9800  (Gerard)
+      5144  Johnson    Terre Haute      3500  (Gerard)
+      6548  Robertson  Indianapolis     1000  (Geraldine)
+      8949  Garcia     Fort Wayne       2500  (Gerard)
+      9841  Brown      Gary             3000  (Gerard)
+      9853  Erickson   Clarksville      1750  (Geraldine)
+      9856  Jacobs     Columbus         1900  (Geraldine)
+   Result: PASS - order is correct and all 10 records are present.
+
+TEST SCENARIO 2 - Records interleave from both files correctly
+   Expected: the program should switch between files as the smaller
+             customer number changes (Geraldine, Geraldine, then three
+             Gerard, then Geraldine, then two Gerard, then two Geraldine).
+   Actual: the "(from ...)" tags above show exactly that pattern.
+   Result: PASS - the smaller customer number is always written next.
+
+TEST SCENARIO 3 - One file finishes before the other (sentinel works)
+   Expected: after Gerard's last record (9841) is written, the program
+             should keep writing Geraldine's remaining records (9853, 9856)
+             without error, because Gerard's file is now at the HIGH_VALUE
+             sentinel.
+   Actual: 9853 and 9856 were written last, then the loop ended cleanly.
+   Result: PASS - the sentinel correctly drains the longer file.
+
+TEST SCENARIO 4 - Record count and no data loss
+   Expected: 5 + 5 = 10 records in, 10 records out; no record dropped or
+             duplicated.
+   Actual: program reported "Merged 10 customer records"; the output file
+           "Merged Customers - Kaleb Whybrew.csv" contains 10 data rows.
+   Result: PASS.
+
+TEST SCENARIO 5 - Assumption of no identical customer numbers
+   Expected: with all customer numbers unique, the else branch (equal case)
+             is never needed, and every number appears exactly once.
+   Actual: all 10 customer numbers are unique in the output.
+   Result: PASS.
+
+--------------------------------------------------------------------
+SUMMARY: 5 of 5 test scenarios PASSED. The output file
+"Merged Customers - Kaleb Whybrew.csv" is the solution/proof file.

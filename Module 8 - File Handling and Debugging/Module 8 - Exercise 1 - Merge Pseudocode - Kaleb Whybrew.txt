@@ -1,0 +1,70 @@
+Module 8 - Exercise 1 - Merge Pseudocode - Kaleb Whybrew
+Geraldine's Landscaping and Gerard's Landscaping - merge customer files
+(Both files are in customer number order; no identical customer numbers.)
+Each record: customer number, last name, address, property area (sq ft).
+
+// ----- Standard merge with a HIGH_VALUE sentinel -----
+
+start
+   Declarations
+      InputFile  geraldineFile
+      InputFile  gerardFile
+      OutputFile mergedFile
+      num    graCustNum,  gerCustNum
+      string graName,     gerName
+      string graAddress,  gerAddress
+      num    graArea,     gerArea
+      num    HIGH_VALUE = 999999          // larger than any real customer number
+      string bothAtEof = "N"
+   getReady()
+   while bothAtEof = "N"
+      mergeLoop()
+   endwhile
+   finish()
+stop
+
+getReady()
+   open geraldineFile "GeraldineCustomers.dat"
+   open gerardFile    "GerardCustomers.dat"
+   open mergedFile    "MergedCustomers.dat"
+   readGeraldine()
+   readGerard()
+   checkBoth()
+return
+
+readGeraldine()
+   input graCustNum, graName, graAddress, graArea from geraldineFile
+   if eof then
+      graCustNum = HIGH_VALUE
+   endif
+return
+
+readGerard()
+   input gerCustNum, gerName, gerAddress, gerArea from gerardFile
+   if eof then
+      gerCustNum = HIGH_VALUE
+   endif
+return
+
+checkBoth()
+   if graCustNum = HIGH_VALUE AND gerCustNum = HIGH_VALUE then
+      bothAtEof = "Y"
+   endif
+return
+
+mergeLoop()
+   if graCustNum < gerCustNum then                          // Geraldine's number is smaller
+      output graCustNum, graName, graAddress, graArea to mergedFile
+      readGeraldine()
+   else                                                     // Gerard's number is smaller
+      output gerCustNum, gerName, gerAddress, gerArea to mergedFile
+      readGerard()
+   endif
+   checkBoth()
+return
+
+finish()
+   close geraldineFile
+   close gerardFile
+   close mergedFile
+return

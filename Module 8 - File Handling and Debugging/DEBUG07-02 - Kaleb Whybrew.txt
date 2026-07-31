@@ -1,0 +1,91 @@
+// DEBUG07-02  -  Corrected by Kaleb Whybrew
+//
+// The files are sorted from HIGHEST to LOWEST value, and the merged file
+// must keep that order, so at each step the program outputs the LARGER value.
+//
+// Errors found and corrected:
+//  1. "InputFile mergedFile" - the merged file is written to, so it must be
+//     declared as an OutputFile.
+//  2. Sentinel value was wrong direction. Because we output the LARGER value
+//     for a high-to-low merge, a finished file must take a value LOWER than
+//     any real one so it is never chosen. Changed HIGH_VALUE = 999999 to
+//     LOW_VALUE = -1, and updated readA(), readB(), and checkBoth() to use it.
+//  3. detailLoop() output the wrong record. It output the smaller value and,
+//     worse, advanced a different file than the one it output. Fixed so each
+//     branch outputs the LARGER value and reads from that same file:
+//        if roomAValue > roomBValue  -> output roomA, readA
+//        else                        -> output roomB, readB
+//  4. detailLoop() was missing a call to checkBoth(), so bothFilesDone never
+//     got updated inside the loop (infinite loop). Added checkBoth().
+//  5. allDone(): "close mergeFile" should be "close mergedFile".
+// -----------------------------------------------------------------------
+
+// The two senior class homerooms at Littleville High School
+// are having a fundraising drive for the prom. Each time a student
+// solicits a contribution, a record is created with the
+// student's name and the value. Two files have been created for
+// Homeroom A and Homeroom B. Each file is sorted in contribution
+// value order from highest to lowest. This program merges the two files.
+start
+   Declarations
+      string roomAName
+      num roomAValue
+      string roomBName
+      num roomBValue
+      string bothFilesDone = "N"
+      num LOW_VALUE = -1
+      InputFile roomAFile
+      InputFile roomBFile
+      OutputFile mergedFile
+   getReady()
+   while bothFilesDone = "N"
+      detailLoop()
+   endwhile
+   allDone()
+stop
+
+getReady()
+   open roomAFile "roomAFile.dat"
+   open roomBFile "roomBFile.dat"
+   open mergedFile "mergedFile.dat"
+   readA()
+   readB()
+   checkBoth()
+return
+
+readA()
+   input roomAName, roomAValue from roomAFile
+   if eof then
+      roomAValue = LOW_VALUE
+   endif
+return
+
+readB()
+   input roomBName, roomBValue from roomBFile
+   if eof then
+      roomBValue = LOW_VALUE
+   endif
+return
+
+checkBoth()
+   if roomAValue = LOW_VALUE AND roomBValue = LOW_VALUE then
+      bothFilesDone = "Y"
+   endif
+return
+
+detailLoop()
+   if roomAValue > roomBValue then
+      output roomAName, roomAValue to mergedFile
+      readA()
+   else
+      output roomBName, roomBValue to mergedFile
+      readB()
+   endif
+   checkBoth()
+return
+
+allDone()
+   close roomAFile
+   close roomBFile
+   close mergedFile
+return
